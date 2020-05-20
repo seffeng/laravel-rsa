@@ -1,0 +1,36 @@
+{
+    "name" : "seffeng/laravel-rsa",
+    "description" : "PHP laravel extension rsa",
+    "keywords" : [
+        "PHP",
+        "laravel",
+        "lumen",
+        "seffeng",
+        "rsa"
+    ],
+    "license" : "MIT",
+    "homepage" : "https://github.com/seffeng/laravel-rsa",
+    "authors" : [{
+            "name" : "seffeng",
+            "email" : "save.zxf@gmail.com",
+            "homepage" : "https://github.com/seffeng"
+        }
+    ],
+    "require" : {
+        "php" : ">=7.1.3",
+        "phpseclib/phpseclib" : "^2.0"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Seffeng\\LaravelRSA\\" : "src/"
+        }
+    },
+    "extra" : {
+        "laravel" : {
+            "providers" : [
+                "Seffeng\\LaravelRSA\\RSAServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability" : "stable"
+}
