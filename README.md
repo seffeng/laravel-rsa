@@ -48,7 +48,15 @@ class SiteController extends Controller
             $entext = RSA::encrypt($plaintext);
             // 解密
             $detext = RSA::decrypt($entext);
-            var_dump($entext, $detext);
+
+            $message = 'a=aaa&b=bbb&c=ccc';
+            // 签名
+            $sign = RSA::sign($message);
+            // 签名验证
+            $verify = RSA::verify($message, $sign);
+
+            var_dump(base64_encode($entext), $detext);
+            var_dump(base64_encode($sign), $verify);
         } catch (RSAException $e) {
             var_dump($e->getMessage());
         } catch (\Exception $e) {

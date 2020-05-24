@@ -114,6 +114,45 @@ class RSA
     }
 
     /**
+     * @author zxf
+     * @date   2020年5月24日
+     * @param string $message
+     * @param string $publicKey
+     * @throws RSAException
+     * @return string
+     */
+    public function sign(string $message, string $publicKey = null)
+    {
+        try {
+            $this->setPublicKey($publicKey);
+            $this->cryptRSA->loadKey($this->publicKey);
+            return $this->cryptRSA->sign($message);
+        } catch (\Exception $e) {
+            throw new RSAException($e->getMessage() .' or invalid key.');
+        }
+    }
+
+    /**
+     * @author zxf
+     * @date   2020年5月24日
+     * @param  string $message
+     * @param  string $signature
+     * @param  string $privateKey
+     * @throws RSAException
+     * @return boolean
+     */
+    public function verify(string $message, string $signature, string $privateKey = null)
+    {
+        try {
+            $this->setPrivateKey($privateKey);
+            $this->cryptRSA->loadKey($this->privateKey);
+            return $this->cryptRSA->verify($message, $signature);
+        } catch (\Exception $e) {
+            throw new RSAException($e->getMessage() .' or invalid key.');
+        }
+    }
+
+    /**
      *
      * @author zxf
      * @date   2020年5月20日

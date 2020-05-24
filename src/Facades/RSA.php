@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Facade;
  * @date    2020年5月20日
  * @method static \Seffeng\LaravelRSA\RSA createKey(int $bits = 1024, int $timeout = false, $partial = [])
  * @method static \Seffeng\LaravelRSA\RSA encrypt($plaintext, string $publicKey = null)
- * @method static \Seffeng\LaravelRSA\RSA decrypt($ciphertext, string $private = null)
+ * @method static \Seffeng\LaravelRSA\RSA decrypt($ciphertext, string $privateKey = null)
+ * @method static \Seffeng\LaravelRSA\RSA sign(string $message, string $publicKey = null)
+ * @method static \Seffeng\LaravelRSA\RSA verify(string $message, string $signature, string $privateKey = null)
  *
  * @see \Seffeng\LaravelRSA\RSA
  */
