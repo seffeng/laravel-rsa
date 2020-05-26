@@ -34,5 +34,10 @@ return [
          |
          */
         'passphrase' => env('RSA_PASSPHRASE'),
-    ]
+    ],
+
+    /**
+     * [1-OAEP, 2-PKCS1, 3-none]
+     */
+    'ENCRYPTION_MODE' => env('ENCRYPTION_MODE', 1),
 ];

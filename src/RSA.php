@@ -52,6 +52,7 @@ class RSA
     {
         $privateName = ArrayHelper::getValue($config, 'keys.private');
         $publicName = ArrayHelper::getValue($config, 'keys.public');
+        $encryptionMode = ArrayHelper::getValue($config, 'ENCRYPTION_MODE');
 
         if (is_null($privateName) || is_null($publicName)) {
             throw new RSAException('Warning: privateKey file, publicKey file cannot be empty.');
@@ -60,6 +61,7 @@ class RSA
         $this->privateKeyFile = storage_path($privateName);
         $this->publicKeyFile = storage_path($publicName);
         $this->cryptRSA = new CryptRSA();
+        $this->cryptRSA->setEncryptionMode($encryptionMode);
     }
 
     /**
