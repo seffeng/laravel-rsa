@@ -37,7 +37,12 @@ return [
     ],
 
     /**
-     * [1-OAEP, 2-PKCS1, 3-none]
+     * [1-SHA1, 2-PKCS1, 3-NONE]
      */
-    'ENCRYPTION_MODE' => env('ENCRYPTION_MODE', 1),
+    'encryptionMode' => env('RSA_ENCRYPTION_MODE', 1),
+
+    /**
+     * [1-SHA1, 2-PKCS1]
+     */
+    'signatureMode' => env('RSA_SIGNATURE_MODE', 1),
 ];

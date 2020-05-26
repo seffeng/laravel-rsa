@@ -43,6 +43,18 @@ class RSA
 
     /**
      *
+     * @var integer
+     */
+    protected $encryptionMode;
+
+    /**
+     *
+     * @var integer
+     */
+    protected $signatureMode;
+
+    /**
+     *
      * @author zxf
      * @date   2020年5月20日
      * @param  array $config
@@ -52,7 +64,8 @@ class RSA
     {
         $privateName = ArrayHelper::getValue($config, 'keys.private');
         $publicName = ArrayHelper::getValue($config, 'keys.public');
-        $encryptionMode = ArrayHelper::getValue($config, 'ENCRYPTION_MODE');
+        $this->encryptionMode = ArrayHelper::getValue($config, 'encryptionMode');
+        $this->signatureMode = ArrayHelper::getValue($config, 'signatureMode');
 
         if (is_null($privateName) || is_null($publicName)) {
             throw new RSAException('Warning: privateKey file, publicKey file cannot be empty.');
@@ -61,7 +74,10 @@ class RSA
         $this->privateKeyFile = storage_path($privateName);
         $this->publicKeyFile = storage_path($publicName);
         $this->cryptRSA = new CryptRSA();
-        $this->cryptRSA->setEncryptionMode($encryptionMode);
+        $this->setPublicKey();
+        $this->setPrivateKey();
+        is_numeric($this->encryptionMode) && $this->setEncryptionMode($this->encryptionMode);
+        is_numeric($this->signatureMode) && $this->setSignatureMode($this->signatureMode);
     }
 
     /**
@@ -85,10 +101,9 @@ class RSA
      * @param string $plaintext
      * @return string
      */
-    public function encrypt($plaintext, string $publicKey = null)
+    public function encrypt($plaintext)
     {
         try {
-            $this->setPublicKey($publicKey);
             $this->cryptRSA->loadKey($this->publicKey);
             return $this->cryptRSA->encrypt($plaintext);
         } catch (\Exception $e) {
@@ -101,13 +116,11 @@ class RSA
      * @author zxf
      * @date   2020年5月20日
      * @param string $ciphertext
-     * @param string $privateKey
      * @return string
      */
-    public function decrypt($ciphertext, string $privateKey = null)
+    public function decrypt($ciphertext)
     {
         try {
-            $this->setPrivateKey($privateKey);
             $this->cryptRSA->loadKey($this->privateKey);
             return $this->cryptRSA->decrypt($ciphertext);
         } catch (\Exception $e) {
@@ -119,14 +132,12 @@ class RSA
      * @author zxf
      * @date   2020年5月24日
      * @param string $message
-     * @param string $publicKey
      * @throws RSAException
      * @return string
      */
-    public function sign(string $message, string $publicKey = null)
+    public function sign(string $message)
     {
         try {
-            $this->setPublicKey($publicKey);
             $this->cryptRSA->loadKey($this->publicKey);
             return $this->cryptRSA->sign($message);
         } catch (\Exception $e) {
@@ -139,14 +150,12 @@ class RSA
      * @date   2020年5月24日
      * @param  string $message
      * @param  string $signature
-     * @param  string $privateKey
      * @throws RSAException
      * @return boolean
      */
-    public function verify(string $message, string $signature, string $privateKey = null)
+    public function verify(string $message, string $signature)
     {
         try {
-            $this->setPrivateKey($privateKey);
             $this->cryptRSA->loadKey($this->privateKey);
             return $this->cryptRSA->verify($message, $signature);
         } catch (\Exception $e) {
@@ -164,12 +173,24 @@ class RSA
     public function setPublicKey(string $publicKey = null)
     {
         if (is_null($publicKey)) {
-            if (!file_exists($this->publicKeyFile)) {
-                throw new RSAException('Warning: publicKey file not found.');
+            if (file_exists($this->publicKeyFile)) {
+                $publicKey = file_get_contents($this->publicKeyFile);
             }
-            $publicKey = file_get_contents($this->publicKeyFile);
         }
         $this->publicKey = $publicKey;
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  integer $format
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setPublicKeyFormat($format)
+    {
+        $this->cryptRSA->setPublicKeyFormat($format);
         return $this;
     }
 
@@ -194,13 +215,25 @@ class RSA
     public function setPrivateKey(string $privateKey = null)
     {
         if (is_null($privateKey)) {
-            if (!file_exists($this->privateKeyFile)) {
-                throw new RSAException('Warning: privateKey file not found.');
+            if (file_exists($this->privateKeyFile)) {
+                $privateKey = file_get_contents($this->privateKeyFile);
             }
-            $privateKey = file_get_contents($this->privateKeyFile);
         }
 
         $this->privateKey = $privateKey;
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  integer $format
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setPrivateKeyFormat($format)
+    {
+        $this->cryptRSA->setPrivateKeyFormat($format);
         return $this;
     }
 
@@ -213,5 +246,132 @@ class RSA
     public function getPrivateKey()
     {
         return $this->privateKey;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param string $comment
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setComment(string $comment)
+    {
+        $this->cryptRSA->setComment($comment);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->cryptRSA->getComment();
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  int $mode
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setEncryptionMode(int $mode)
+    {
+        $this->encryptionMode = $mode;
+        $this->cryptRSA->setEncryptionMode($this->encryptionMode);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  int $mode
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setSignatureMode(int $mode)
+    {
+        $this->signatureMode = $mode;
+        $this->cryptRSA->setSignatureMode($this->signatureMode);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  string $hash
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setHash(string $hash)
+    {
+        $this->cryptRSA->setHash($hash);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  string $hash
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setMGFHash(string $hash)
+    {
+        $this->cryptRSA->setMGFHash($hash);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  string $password
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setPassword($password = false)
+    {
+        $this->cryptRSA->setPassword($password);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  int $saltLength
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function setSaltLength(int $saltLength)
+    {
+        $this->cryptRSA->setSaltLength($saltLength);
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @param  string $algorithm string $algorithm The hashing algorithm to be used. Valid options are 'md5' and 'sha256'. False is returned for invalid values.
+     * @return mixed|boolean|string
+     */
+    public function getPublicKeyFingerprint($algorithm = 'md5')
+    {
+        return $this->cryptRSA->getPublicKeyFingerprint($algorithm);
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年5月26日
+     * @return number
+     */
+    public function getSize()
+    {
+        return $this->cryptRSA->getSize();
     }
 }
