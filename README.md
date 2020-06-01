@@ -68,13 +68,11 @@ class SiteController extends Controller
 
 ## 项目依赖
 
-| 依赖                | 仓库地址                               | 备注 |
-| :------------------ | :------------------------------------- | :--- |
-| phpseclib/phpseclib | https://github.com/phpseclib/phpseclib | 无   |
+| 依赖             | 仓库地址                            | 备注 |
+| :--------------- | :---------------------------------- | :--- |
+| seffeng/cryptlib | https://github.com/seffeng/cryptlib | 无   |
 
 ### 备注
 
 无
-
-
 

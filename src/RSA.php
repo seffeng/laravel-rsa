@@ -6,7 +6,7 @@
 namespace Seffeng\LaravelRSA;
 
 use Seffeng\LaravelRSA\Helpers\ArrayHelper;
-use phpseclib\Crypt\RSA as CryptRSA;
+use Seffeng\Cryptlib\Crypt as CryptRSA;
 use Seffeng\LaravelRSA\Exceptions\RSAException;
 
 class RSA
