@@ -55,8 +55,8 @@ class RSAGenerateKeyCommand extends Command
                 }
             }
             $keys = RSA::createKey();
-            $publicKey = ArrayHelper::getValue($keys, 'publickey');
-            $privateKey = ArrayHelper::getValue($keys, 'privatekey');
+            $publicKey = ArrayHelper::getValue($keys, 'publicKey');
+            $privateKey = ArrayHelper::getValue($keys, 'privateKey');
             file_put_contents(storage_path($privateKeyPath), $privateKey);
             file_put_contents(storage_path($publicKeyPath), $publicKey);
 
