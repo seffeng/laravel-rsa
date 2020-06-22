@@ -28,7 +28,13 @@ $ php artisan rsa:generate
 ```
 
 ```shell
-# /storage 目录下对应 public key 提供给客户端
+# 服务端
+# /storage 目录下对应 public key 提供给客户端用于加密和签名；
+# 使用 private key 解密、验证签名；
+
+# 客户端
+# 接收其他服务端提供的 public key 替换 /storage 目录下对应 public key 用于加密和签名；
+# 使用 public key 加密、签名
 ```
 
 ### 示例
@@ -48,6 +54,10 @@ class SiteController extends Controller
             $entext = RSA::encrypt($plaintext);
             // 解密
             $detext = RSA::decrypt($entext);
+
+            // 使用其他key
+            // RSA::loadKey('-----BEGIN PUBLIC KEY-----......');
+            // RSA::loadKey('-----BEGIN PRIVATE KEY-----......');
 
             $message = 'a=aaa&b=bbb&c=ccc';
             // 签名

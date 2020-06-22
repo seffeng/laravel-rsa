@@ -91,7 +91,31 @@ class RSA
      */
     public function createKey(int $bits = 1024, $timeout = false, $partial = [])
     {
-        return $this->cryptRSA->createKey($bits, $timeout, $partial);
+        try {
+            return $this->cryptRSA->createKey($bits, $timeout, $partial);
+        } catch (\Exception $e) {
+            throw new RSAException($e->getMessage());
+        }
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date    2020年6月22日
+     * @param  string $key
+     * @param  int $type
+     * @return \Seffeng\LaravelRSA\RSA
+     */
+    public function loadKey(string $key, int $type = null)
+    {
+        try {
+            $this->cryptRSA->loadKey($key, $type);
+            $this->setPublicKey($this->cryptRSA->getPublicKey());
+            $this->setPrivateKey($this->cryptRSA->getPrivateKey());
+            return $this;
+        } catch (\Exception $e) {
+            throw new RSAException($e->getMessage());
+        }
     }
 
     /**

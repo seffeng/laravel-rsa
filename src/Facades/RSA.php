@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @author zxf
  * @date    2020年5月20日
  * @method static \Seffeng\LaravelRSA\RSA createKey(int $bits = 1024, $timeout = false, $partial = [])
+ * @method static \Seffeng\LaravelRSA\RSA loadKey(string $key, int $type = null)
  * @method static \Seffeng\LaravelRSA\RSA encrypt($plaintext)
  * @method static \Seffeng\LaravelRSA\RSA decrypt($ciphertext)
  * @method static \Seffeng\LaravelRSA\RSA sign(string $message)
