@@ -37,12 +37,12 @@ return [
     ],
 
     /**
-     * [1-SHA1, 2-PKCS1, 3-NONE]
+     * [1-OPENSSL_PKCS1_PADDING, 2-OPENSSL_SSLV23_PADDING, 3-OPENSSL_NO_PADDING]
      */
     'encryptionMode' => env('RSA_ENCRYPTION_MODE', 1),
 
     /**
-     * [1-SHA1, 2-PKCS1]
+     * [1-OPENSSL_ALGO_SHA1, 2-OPENSSL_ALGO_MD5]
      */
     'signatureMode' => env('RSA_SIGNATURE_MODE', 1),
 ];
