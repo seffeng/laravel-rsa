@@ -162,7 +162,7 @@ class RSA
     public function sign(string $message)
     {
         try {
-            $this->cryptRSA->loadKey($this->publicKey);
+            $this->cryptRSA->loadKey($this->privateKey);
             return $this->cryptRSA->sign($message);
         } catch (\Exception $e) {
             throw new RSAException($e->getMessage() .' or invalid key.');
@@ -180,7 +180,7 @@ class RSA
     public function verify(string $message, string $signature)
     {
         try {
-            $this->cryptRSA->loadKey($this->privateKey);
+            $this->cryptRSA->loadKey($this->publicKey);
             return $this->cryptRSA->verify($message, $signature);
         } catch (\Exception $e) {
             throw new RSAException($e->getMessage() .' or invalid key.');
