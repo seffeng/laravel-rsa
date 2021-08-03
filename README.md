@@ -13,7 +13,8 @@ $ composer require seffeng/laravel-rsa
 # 1、生成配置文件
 $ php artisan vendor:publish --tag="rsa"
 
-# 2、生成key文件
+# 2、生成key文件，多个客户端时可以指定client，对应配置文件中 clients 的配置，如：
+# php artisan rsa:generate default
 $ php artisan rsa:generate
 ```
 
@@ -23,7 +24,8 @@ $ php artisan rsa:generate
 # 1、将以下代码段添加到 /bootstrap/app.php 文件中的 Providers 部分
 $app->register(Seffeng\LaravelRSA\RSAServiceProvider::class);
 
-# 2、生成key文件
+# 2、生成key文件，多个客户端时可以指定client，对应配置文件中 clients 的配置，如：
+# php artisan rsa:generate other-client
 $ php artisan rsa:generate
 ```
 
@@ -49,6 +51,9 @@ class SiteController extends Controller
     public function test()
     {
         try {
+            // 多个客户端使用其他配置时，对应配置文件中 clients 的配置
+            // RSA::loadClient('other-client');
+
             $plaintext = '123456';
             // 加密
             $entext = RSA::encrypt($plaintext);

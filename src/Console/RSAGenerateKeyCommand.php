@@ -17,7 +17,7 @@ class RSAGenerateKeyCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rsa:generate';
+    protected $signature = 'rsa:generate {client=default : rsa配置文件中的clients项}';
 
     /**
      * The console command description.
@@ -43,8 +43,9 @@ class RSAGenerateKeyCommand extends Command
      */
     public function handle()
     {
-        $publicKeyPath = config('rsa.keys.public');
-        $privateKeyPath = config('rsa.keys.private');
+        $client = $this->argument('client');
+        $publicKeyPath = config('rsa.clients.'. $client . '.public');
+        $privateKeyPath = config('rsa.clients.'. $client . '.private');
         if ($publicKeyPath && $privateKeyPath) {
             $exist = false;
             if (file_exists(storage_path($privateKeyPath))) {
@@ -67,6 +68,6 @@ class RSAGenerateKeyCommand extends Command
                 return $this->info('rsa key ['. storage_path($privateKeyPath) .'] set successfully.');
             }
         }
-        throw new RSAException('Please set RSA_PRIVATE_KEY and RSA_PUBLIC_KEY.');
+        throw new RSAException('Please set client\'s RSA_PRIVATE_KEY and RSA_PUBLIC_KEY.');
     }
 }

@@ -55,6 +55,18 @@ class RSA
 
     /**
      *
+     * @var string
+     */
+    protected $client;
+
+    /**
+     *
+     * @var array
+     */
+    protected $config;
+
+    /**
+     *
      * @author zxf
      * @date   2020年5月20日
      * @param  array $config
@@ -62,22 +74,22 @@ class RSA
      */
     public function __construct(array $config)
     {
-        $privateName = ArrayHelper::getValue($config, 'keys.private');
-        $publicName = ArrayHelper::getValue($config, 'keys.public');
-        $this->encryptionMode = ArrayHelper::getValue($config, 'encryptionMode');
-        $this->signatureMode = ArrayHelper::getValue($config, 'signatureMode');
+        $this->config = $config;
+        $client = ArrayHelper::getValue($this->config, 'client');
+        $this->loadClient($client);
+    }
 
-        if (is_null($privateName) || is_null($publicName)) {
-            throw new RSAException('Warning: privateKey file, publicKey file cannot be empty.');
-        }
-
-        $this->privateKeyFile = storage_path($privateName);
-        $this->publicKeyFile = storage_path($publicName);
-        $this->cryptRSA = new CryptRSA();
-        $this->setPublicKey();
-        $this->setPrivateKey();
-        is_numeric($this->encryptionMode) && $this->setEncryptionMode($this->encryptionMode);
-        is_numeric($this->signatureMode) && $this->setSignatureMode($this->signatureMode);
+    /**
+     *
+     * @author zxf
+     * @date   2021年8月3日
+     * @param string $client
+     */
+    public function loadClient(string $client)
+    {
+        $this->setClient($client);
+        $this->loadConfig();
+        return $this;
     }
 
     /**
@@ -397,5 +409,60 @@ class RSA
     public function getSize()
     {
         return $this->cryptRSA->getSize();
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2021年8月3日
+     * @param string $client
+     * @return static
+     */
+    protected function setClient(string $client)
+    {
+        $this->client = $client;
+        return $this;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2021年8月3日
+     * @return string
+     */
+    protected function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     *
+     * @author zxf
+     * @date   2021年8月3日
+     * @throws RSAException
+     */
+    protected function loadConfig()
+    {
+        $client = ArrayHelper::getValue($this->config, 'clients.' . $this->getClient());
+        if ($client) {
+            $privateName = ArrayHelper::getValue($client, 'private');
+            $publicName = ArrayHelper::getValue($client, 'public');
+            $this->encryptionMode = ArrayHelper::getValue($client, 'encryptionMode');
+            $this->signatureMode = ArrayHelper::getValue($client, 'signatureMode');
+
+            if (is_null($privateName) || is_null($publicName)) {
+                throw new RSAException('Warning: privateKey file, publicKey file cannot be empty.');
+            }
+
+            $this->privateKeyFile = storage_path($privateName);
+            $this->publicKeyFile = storage_path($publicName);
+            $this->cryptRSA = new CryptRSA();
+            $this->setPublicKey();
+            $this->setPrivateKey();
+            is_numeric($this->encryptionMode) && $this->setEncryptionMode($this->encryptionMode);
+            is_numeric($this->signatureMode) && $this->setSignatureMode($this->signatureMode);
+        } else {
+            throw new RSAException('The client['. $this->getClient() .'] is not found.');
+        }
     }
 }
