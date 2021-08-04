@@ -17,7 +17,7 @@ class RSAGenerateKeyCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'rsa:generate {client=default : rsa配置文件中的clients项}';
+    protected $signature = 'rsa:generate {client? : rsa配置文件中的clients项}';
 
     /**
      * The console command description.
@@ -44,6 +44,7 @@ class RSAGenerateKeyCommand extends Command
     public function handle()
     {
         $client = $this->argument('client');
+        is_null($client) && $client = config('rsa.client');
         $publicKeyPath = config('rsa.clients.'. $client . '.public');
         $privateKeyPath = config('rsa.clients.'. $client . '.private');
         if ($publicKeyPath && $privateKeyPath) {
