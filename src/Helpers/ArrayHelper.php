@@ -55,7 +55,7 @@ class ArrayHelper
      * @author zxf
      * @date    2020年4月26日
      * @param  array $array
-     * @return number
+     * @return integer
      */
     public static function getDepth(array $array)
     {

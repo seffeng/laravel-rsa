@@ -96,8 +96,8 @@ class RSA
      *
      * @author zxf
      * @date   2020年5月20日
-     * @param  int $bits
-     * @param  int $timeout
+     * @param  integer $bits
+     * @param  integer $timeout
      * @param  array $partial
      * @return array
      */
@@ -115,7 +115,7 @@ class RSA
      * @author zxf
      * @date    2020年6月22日
      * @param  string $key
-     * @param  int $type
+     * @param  integer $type
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function loadKey(string $key, int $type = null)
@@ -312,7 +312,7 @@ class RSA
      *
      * @author zxf
      * @date    2020年5月26日
-     * @param  int $mode
+     * @param  integer $mode
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setEncryptionMode(int $mode)
@@ -326,7 +326,7 @@ class RSA
      *
      * @author zxf
      * @date    2020年5月26日
-     * @param  int $mode
+     * @param  integer $mode
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setSignatureMode(int $mode)
@@ -379,7 +379,7 @@ class RSA
      *
      * @author zxf
      * @date    2020年5月26日
-     * @param  int $saltLength
+     * @param  integer $saltLength
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setSaltLength(int $saltLength)
@@ -404,7 +404,7 @@ class RSA
      *
      * @author zxf
      * @date    2020年5月26日
-     * @return number
+     * @return integer
      */
     public function getSize()
     {
