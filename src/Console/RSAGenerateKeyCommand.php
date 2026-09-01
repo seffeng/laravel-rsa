@@ -6,8 +6,8 @@
 namespace Seffeng\LaravelRSA\Console;
 
 use Illuminate\Console\Command;
+use Seffeng\ArrHelper\Arr;
 use Seffeng\LaravelRSA\Facades\RSA;
-use Seffeng\LaravelRSA\Helpers\ArrayHelper;
 use Seffeng\LaravelRSA\Exceptions\RSAException;
 
 class RSAGenerateKeyCommand extends Command
@@ -57,8 +57,8 @@ class RSAGenerateKeyCommand extends Command
                 }
             }
             $keys = RSA::createKey();
-            $publicKey = ArrayHelper::getValue($keys, 'publicKey');
-            $privateKey = ArrayHelper::getValue($keys, 'privateKey');
+            $publicKey = Arr::getValue($keys, 'publicKey');
+            $privateKey = Arr::getValue($keys, 'privateKey');
             file_put_contents(storage_path($privateKeyPath), $privateKey);
             file_put_contents(storage_path($publicKeyPath), $publicKey);
 

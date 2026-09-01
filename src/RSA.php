@@ -5,7 +5,7 @@
  */
 namespace Seffeng\LaravelRSA;
 
-use Seffeng\LaravelRSA\Helpers\ArrayHelper;
+use Seffeng\ArrHelper\Arr;
 use Seffeng\Cryptlib\Crypt as CryptRSA;
 use Seffeng\LaravelRSA\Exceptions\RSAException;
 
@@ -75,7 +75,7 @@ class RSA
     public function __construct(array $config)
     {
         $this->config = $config;
-        $client = ArrayHelper::getValue($this->config, 'client');
+        $client = Arr::getValue($this->config, 'client');
         $this->loadClient($client);
     }
 
@@ -118,7 +118,7 @@ class RSA
      * @param  integer $type
      * @return \Seffeng\LaravelRSA\RSA
      */
-    public function loadKey(string $key, int $type = null)
+    public function loadKey(string $key, ?int $type = null)
     {
         try {
             $this->cryptRSA->loadKey($key, $type);
@@ -206,7 +206,7 @@ class RSA
      * @param string $publicKey
      * @return \Seffeng\LaravelRSA\RSA
      */
-    public function setPublicKey(string $publicKey = null)
+    public function setPublicKey(?string $publicKey = null)
     {
         if (is_null($publicKey)) {
             if (file_exists($this->publicKeyFile)) {
@@ -248,7 +248,7 @@ class RSA
      * @param string $privateKey
      * @return \Seffeng\LaravelRSA\RSA
      */
-    public function setPrivateKey(string $privateKey = null)
+    public function setPrivateKey(?string $privateKey = null)
     {
         if (is_null($privateKey)) {
             if (file_exists($this->privateKeyFile)) {
@@ -443,12 +443,12 @@ class RSA
      */
     protected function loadConfig()
     {
-        $client = ArrayHelper::getValue($this->config, 'clients.' . $this->getClient());
+        $client = Arr::getValue($this->config, 'clients.' . $this->getClient());
         if ($client) {
-            $privateName = ArrayHelper::getValue($client, 'private');
-            $publicName = ArrayHelper::getValue($client, 'public');
-            $this->encryptionMode = ArrayHelper::getValue($client, 'encryptionMode');
-            $this->signatureMode = ArrayHelper::getValue($client, 'signatureMode');
+            $privateName = Arr::getValue($client, 'private');
+            $publicName = Arr::getValue($client, 'public');
+            $this->encryptionMode = Arr::getValue($client, 'encryptionMode');
+            $this->signatureMode = Arr::getValue($client, 'signatureMode');
 
             if (is_null($privateName) || is_null($publicName)) {
                 throw new RSAException('Warning: privateKey file, publicKey file cannot be empty.');
