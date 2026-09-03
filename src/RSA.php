@@ -43,13 +43,13 @@ class RSA
 
     /**
      *
-     * @var integer
+     * @var int
      */
     protected $encryptionMode;
 
     /**
      *
-     * @var integer
+     * @var int
      */
     protected $signatureMode;
 
@@ -83,7 +83,8 @@ class RSA
      *
      * @author zxf
      * @date   2021年8月3日
-     * @param string $client
+     * @param  string $client
+     * @return static
      */
     public function loadClient(string $client)
     {
@@ -96,8 +97,8 @@ class RSA
      *
      * @author zxf
      * @date   2020年5月20日
-     * @param  integer $bits
-     * @param  integer $timeout
+     * @param  int $bits
+     * @param  int $timeout
      * @param  array $partial
      * @return array
      */
@@ -113,9 +114,9 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年6月22日
+     * @date   2020年6月22日
      * @param  string $key
-     * @param  integer $type
+     * @param  int $type
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function loadKey(string $key, ?int $type = null)
@@ -134,7 +135,7 @@ class RSA
      *
      * @author zxf
      * @date   2020年5月20日
-     * @param string $plaintext
+     * @param  string $plaintext
      * @return string
      */
     public function encrypt($plaintext)
@@ -151,7 +152,7 @@ class RSA
      *
      * @author zxf
      * @date   2020年5月20日
-     * @param string $ciphertext
+     * @param  string $ciphertext
      * @return string
      */
     public function decrypt($ciphertext)
@@ -167,7 +168,7 @@ class RSA
     /**
      * @author zxf
      * @date   2020年5月24日
-     * @param string $message
+     * @param  string $message
      * @throws RSAException
      * @return string
      */
@@ -187,7 +188,7 @@ class RSA
      * @param  string $message
      * @param  string $signature
      * @throws RSAException
-     * @return boolean
+     * @return bool
      */
     public function verify(string $message, string $signature)
     {
@@ -203,7 +204,7 @@ class RSA
      *
      * @author zxf
      * @date   2020年5月20日
-     * @param string $publicKey
+     * @param  string $publicKey
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setPublicKey(?string $publicKey = null)
@@ -220,8 +221,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @param  integer $format
+     * @date   2020年5月26日
+     * @param  int $format
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setPublicKeyFormat($format)
@@ -245,7 +246,7 @@ class RSA
      *
      * @author zxf
      * @date   2020年5月20日
-     * @param string $privateKey
+     * @param  string $privateKey
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setPrivateKey(?string $privateKey = null)
@@ -263,8 +264,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @param  integer $format
+     * @date   2020年5月26日
+     * @param  int $format
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setPrivateKeyFormat($format)
@@ -287,8 +288,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @param string $comment
+     * @date   2020年5月26日
+     * @param  string $comment
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setComment(string $comment)
@@ -300,7 +301,7 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
+     * @date   2020年5月26日
      * @return string
      */
     public function getComment()
@@ -311,8 +312,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @param  integer $mode
+     * @date   2020年5月26日
+     * @param  int $mode
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setEncryptionMode(int $mode)
@@ -325,8 +326,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @param  integer $mode
+     * @date   2020年5月26日
+     * @param  int $mode
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setSignatureMode(int $mode)
@@ -339,7 +340,7 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
+     * @date   2020年5月26日
      * @param  string $hash
      * @return \Seffeng\LaravelRSA\RSA
      */
@@ -352,7 +353,7 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
+     * @date   2020年5月26日
      * @param  string $hash
      * @return \Seffeng\LaravelRSA\RSA
      */
@@ -365,7 +366,7 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
+     * @date   2020年5月26日
      * @param  string $password
      * @return \Seffeng\LaravelRSA\RSA
      */
@@ -378,8 +379,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @param  integer $saltLength
+     * @date   2020年5月26日
+     * @param  int $saltLength
      * @return \Seffeng\LaravelRSA\RSA
      */
     public function setSaltLength(int $saltLength)
@@ -391,9 +392,9 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
+     * @date   2020年5月26日
      * @param  string $algorithm string $algorithm The hashing algorithm to be used. Valid options are 'md5' and 'sha256'. False is returned for invalid values.
-     * @return mixed|boolean|string
+     * @return mixed|bool|string
      */
     public function getPublicKeyFingerprint($algorithm = 'md5')
     {
@@ -403,8 +404,8 @@ class RSA
     /**
      *
      * @author zxf
-     * @date    2020年5月26日
-     * @return integer
+     * @date   2020年5月26日
+     * @return int
      */
     public function getSize()
     {
@@ -415,7 +416,7 @@ class RSA
      *
      * @author zxf
      * @date   2021年8月3日
-     * @param string $client
+     * @param  string $client
      * @return static
      */
     protected function setClient(string $client)

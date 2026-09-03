@@ -41,7 +41,7 @@ class RSAServiceProvider extends BaseServiceProvider
     /**
      *
      * @author zxf
-     * @date    2020年5月20日
+     * @date   2020年5月20日
      */
     public function boot()
     {
@@ -55,7 +55,7 @@ class RSAServiceProvider extends BaseServiceProvider
     /**
      *
      * @author zxf
-     * @date    2020年5月20日
+     * @date   2020年5月20日
      */
     protected function registerAliases()
     {
@@ -65,7 +65,7 @@ class RSAServiceProvider extends BaseServiceProvider
     /**
      *
      * @author zxf
-     * @date    2020年5月20日
+     * @date   2020年5月20日
      * @return string
      */
     protected function configPath()
